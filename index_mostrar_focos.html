@@ -1,0 +1,41 @@
+<html>
+<head>
+  <!-- Plotly.js -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+<!-- Plotly chart will be drawn inside this DIV -->
+<div id="gd"></div>
+  <script>
+Plotly.d3.csv(
+    "https://raw.githubusercontent.com/dragongrox/CleanWorld/focos/datos.csv",
+    function(err, rows) {
+        function unpack(rows, key) {
+            return rows.map(function(row) {
+                return row[key];
+            });
+        }
+
+        var data = [
+            {
+                type: "scattermapbox",
+                text: unpack(rows, "Globvalue"),
+                lon: unpack(rows, "Lon"),
+                lat: unpack(rows, "Lat"),
+                marker: { color: "fuchsia", size: 4 }
+            }
+        ];
+
+        var layout = {
+            dragmode: "zoom",
+            mapbox: { style: "open-street-map", center: { lat: 37.977543, lon: -1.177170 }, zoom: 9 },
+            margin: { r: 0, t: 0, b: 0, l: 0 }
+        };
+
+        Plotly.newPlot("gd", data, layout);
+    }
+);
+  </script>
+</div>
+</body>
+</html>
